@@ -1,29 +1,69 @@
-version: "3"
-services: 
+version: "3.3"
+services:
   jenkins:
     image: jenkins/jenkins:lts
     container_name: jenkins_devops
-    volumes: 
-      - "./JENKINS:/var/jenkins_home"
-    ports: 
+    ports:
       - "8080:8080"
-      - "5000:5000"
+      - "443:443"
+      - "50000:50000"
+    volumes:
+      - type: volume
+        source: jenkins_home
+        target: /var/jenkins_home
     networks: 
       - devops_net
   
   sonarqube:
     image: sonarqube
     container_name: sonar_devops
-    volumes: 
-      - "./SONARQUBE/sonarqube_conf:/opt/sonarqube/conf"
-      - "./SONARQUBE/sonarqube_data:/opt/sonarqube/data"
-      - "./SONARQUBE/sonarqube_extensions:/opt/sonarqube/extensions"
-      - "./SONARQUBE/sonarqube_logs:/opt/sonarqube/logs"
-      - "./SONARQUBE/sonarqube_bundled-plugins:/opt/sonarqube/lib/bundled-plugins"
     ports: 
       - "9000:9000"
+    volumes: 
+      - type: volume
+        source: sonarqube_conf
+        target: /opt/sonarqube/conf
+      - type: volume
+        source: sonarqube_data
+        target: /opt/sonarqube/data
+      - type: volume
+        source: sonarqube_extensions
+        target: /opt/sonarqube/extensions
+      - type: volume
+        source: sonarqube_bundled-plugins
+        target: /opt/sonarqube/lib/bundled-plugins
     networks: 
       - devops_net
-  
+    environment: 
+      SONARQUBE_JDBC_URL: jdbc:postgresql://db_sonar:5432/sonar
+ 
+  db_sonar:
+    image: postgres
+    container_name: db_sonar
+    environment: 
+      POSTGRES_USER: sonar
+      POSTGRES_PASSWORD: sonar
+    volumes:
+      - type: volume
+        source: postgresql
+        target: /var/lib/postgresql
+      - type: volume
+        source: postgresql_data
+        target: /var/lib/posgresql/data
+    
+    networks: 
+      - devops_net
+
 networks: 
   devops_net:
+
+volumes:
+  jenkins_home:
+  
+  sonarqube_conf:
+  sonarqube_data:
+  sonarqube_extensions:
+  sonarqube_bundled-plugins:
+
+  postgresql_data:
+  postgresql:
