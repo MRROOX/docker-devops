@@ -21,8 +21,28 @@ Para que los cambios persistan en el sistema debemos modificar el archivo `/etc/
 ```
 vm.max_map_count=262144
 ```
+# DESPLIEGUE
+
+```
+docker-compose up -d
+
+docker-compose up
+```
 
 # JENKINS
+
+### Instalación
+
+Para obtener la password que genera Jenkins en el archivo `/var/jenkins_home/secrets/initialAdminPassword`utilizamos el siguiente comando desde fuera de nuestro contenedor.
+
+```
+docker exec <nombre_contenedor> bash -c "cat /var/jenkins_home/secrets/initialAdminPassword"
+```
+
+```
+docker exec jenkins_devops bash -c "cat /var/jenkins_home/secrets/initialAdminPassword"
+```
+Obtendremos el password para iniciar la configuracion de Jenkins.
 
 
 
