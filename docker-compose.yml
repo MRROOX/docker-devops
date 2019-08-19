@@ -11,6 +11,12 @@ services:
       - type: volume
         source: jenkins_home
         target: /var/jenkins_home
+      - type: bind
+        source: /var/run/docker.sock
+        taget: /var/run/docker.sock
+      - type: bind
+        source: /usr/bin/docker
+        target: /usr/bin/docker
     networks: 
       - devops_net
   
