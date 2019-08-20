@@ -20,7 +20,6 @@ services:
         target: /usr/bin/docker
     networks: 
       - devops_net
-      - docker_net
   
   sonarqube:
     image: sonarqube
@@ -64,8 +63,6 @@ services:
 
 networks: 
   devops_net:
-  docker_net:
-    driver: bridge
 
 volumes:
   jenkins_home:
