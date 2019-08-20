@@ -3,6 +3,7 @@ services:
   jenkins:
     image: jenkins/jenkins:lts
     container_name: jenkins_devops
+    user: root:root
     ports:
       - "8080:8080"
       - "443:443"
@@ -19,6 +20,7 @@ services:
         target: /usr/bin/docker
     networks: 
       - devops_net
+      - docker_net
   
   sonarqube:
     image: sonarqube
@@ -62,6 +64,8 @@ services:
 
 networks: 
   devops_net:
+  docker_net:
+    driver: bridge
 
 volumes:
   jenkins_home:
