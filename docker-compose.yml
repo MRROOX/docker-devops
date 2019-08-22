@@ -1,5 +1,24 @@
 version: "3.3"
 services:
+  portainer:
+    image: portainer/portainer
+    container_name: portainer_devops
+    ports:
+      - "9999:9000"
+      - "8888:8080"
+    volumes:
+      - type: volume
+        source: portainer_data
+        target: /data
+      - type: bind
+        source: /usr/bin/docker
+        target: /usr/bin/docker
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+    networks: 
+      - devops_net
+  
   jenkins:
     image: jenkins/jenkins:lts
     container_name: jenkins_devops
@@ -13,11 +32,11 @@ services:
         source: jenkins_home
         target: /var/jenkins_home
       - type: bind
-        source: /var/run/docker.sock
-        target: /var/run/docker.sock
-      - type: bind
         source: /usr/bin/docker
         target: /usr/bin/docker
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
     networks: 
       - devops_net
   
@@ -65,6 +84,8 @@ networks:
   devops_net:
 
 volumes:
+  portainer_data:
+
   jenkins_home:
   
   sonarqube_conf:
