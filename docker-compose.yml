@@ -3,6 +3,7 @@ services:
   portainer:
     image: portainer/portainer
     container_name: portainer_devops
+    restart: on-failure
     ports:
       - "9999:9000"
       - "8888:8080"
