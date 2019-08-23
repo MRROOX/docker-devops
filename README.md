@@ -28,8 +28,16 @@ docker-compose up -d
 
 docker-compose up
 ```
+# PORTAINER
+
+#### http://localhost:9999
+
+Al inidiciar el contenedor se debe crear un usuario y una contraseña, estos datos seran persistidos gracias al volumen que sea creado.
+
+Una vez crear el usuario, se selecciona un entorno local (local Docker environment).
 
 # JENKINS
+#### http://localhost:8080
 
 ### Instalación
 
@@ -45,8 +53,8 @@ docker exec jenkins_devops bash -c "cat /var/jenkins_home/secrets/initialAdminPa
 Obtendremos el password para iniciar la configuracion de Jenkins.
 
 
-
 # SONARQUBE
-
+#### http://localhost:9000
+Para ingresar a SonarQube el usuario por defecto es `admin` y la contraseña es `admin`, se recomienda energicamente cambiar la contraseña. Dichos datos seran persistidos en volumen que se ha creado.
 
 
