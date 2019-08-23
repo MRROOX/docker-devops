@@ -37,7 +37,7 @@ Al inidiciar el contenedor se debe crear un usuario y una contraseña, estos dat
 Una vez crear el usuario, se selecciona un entorno local (local Docker environment).
 
 # JENKINS
-#### http://localhost:8080
+#### http://localhost:8088
 
 ### Instalación
 
