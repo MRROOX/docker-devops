@@ -2,6 +2,7 @@
 ##### https://community.sonarsource.com/t/is-sonarqube-server-6-7-3-supporting-npm-angular-jenkins/4789/3
 ##### https://community.sonarsource.com/t/is-sonarqube-server-6-7-3-supporting-npm-angular-jenkins/4789/2
 ##### https://www.youtube.com/watch?v=SWl_XicACyk
+##### https://www.thepolyglotdeveloper.com/2017/04/continuous-deployment-of-web-application-containers-with-jenkins-and-docker/
 
 Las actividades realizadas consisnten en:
 
