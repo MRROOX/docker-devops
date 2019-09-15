@@ -1,0 +1,55 @@
+
+node {
+    stage('Get Project from Gitlab'){
+        // modificar
+        git branch: 'develop',
+        // modificar
+            credentialsId: 'mrroox',
+            // modificar
+            url: 'https://gitlab.com/repositorio'
+    }
+
+    stage('Build Nodejs & SonarQube Analysis'){
+      
+    nodejs(nodeJSInstallationName: 'NodeJS', configId:''){
+        script{
+          withSonarQubeEnv('SonarQube') { 
+          def scannerHome = tool 'SonarScanner';
+          // modificar todo
+          sh "${scannerHome}/bin/sonar-scanner "+
+           '-X ' +
+          '-Dsonar.projectKey=<Ejemplo> ' +
+          '-Dsonar.projectName=<Ejemplo_Dev> ' +
+          '-Dsonar.projectVersion=0.0.1 ' +
+          '-Dsonar.projectDescription=<Ejemplo_web> ' +
+          '-Dsonar.sources=. '+
+          '-Dsonar.sourceEncoding=UTF-8 '
+            }
+           }
+        }
+    }
+    sleep(7)
+    stage('Quality Gate'){
+        timeout(time: 1, unit:'MINUTES'){
+            
+            def qg = waitForQualityGate()
+            if (qg.status != 'OK'){
+                error "Pipeline aborted due to quality gate failure: ${qg.status}"       
+            }
+        }    
+    }
+    stage('Build Docker Image'){
+        // modificar
+        sh 'docker rm -f <nombre contenedor>'
+        // modificar
+        sh 'docker rmi -f <imagen>'
+        // modificar
+        sh 'docker build --tag <imagen> . -f <path_a_dockerfile> '
+      }
+    
+    stage('Run Docker Container'){
+       // modificar
+        sh 'docker run -d --name <nombre_contenedor> -p <puerto_host:puerto_contenedor> -v volume:/ruta_contenedor <imagen>'
+        
+    }
+}

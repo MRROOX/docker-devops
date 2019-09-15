@@ -24,6 +24,7 @@ services:
     image: jenkins/jenkins:lts
     container_name: jenkins_devops
     user: root:root
+    privileged: true
     ports:
       - "8088:8080"
       - "443:443"
@@ -39,8 +40,8 @@ services:
         source: /var/run/docker.sock
         target: /var/run/docker.sock
       - type: bind
-        source: /usr/bin/docker-compose
-        target: /usr/bin/docker-compose
+        source: /usr/local/bin/docker-compose
+        target: /usr/local/bin/docker-compose
         
     networks: 
       - devops_net
