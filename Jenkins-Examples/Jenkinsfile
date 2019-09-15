@@ -40,9 +40,9 @@ node {
     }
     stage('Build Docker Image'){
         // modificar
-        sh 'docker rm -f <nombre contenedor>'
+        sh 'docker rm -f <nombre contenedor> || true'
         // modificar
-        sh 'docker rmi -f <imagen>'
+        sh 'docker rmi -f <imagen> || true'
         // modificar
         sh 'docker build --tag <imagen> . -f <path_a_dockerfile> '
       }
