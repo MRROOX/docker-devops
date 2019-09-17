@@ -24,7 +24,7 @@ services:
     image: jenkins/jenkins:lts
     container_name: jenkins_devops
     user: root:root
-    privileged: true
+    restart: on-failure
     ports:
       - "8088:8080"
       - "443:443"
@@ -39,9 +39,6 @@ services:
       - type: bind
         source: /var/run/docker.sock
         target: /var/run/docker.sock
-      - type: bind
-        source: /usr/local/bin/docker-compose
-        target: /usr/local/bin/docker-compose
         
     networks: 
       - devops_net
@@ -49,6 +46,7 @@ services:
   sonarqube:
     image: sonarqube
     container_name: sonar_devops
+    restart: on-failure
     ports: 
       - "9000:9000"
     volumes: 
@@ -72,6 +70,7 @@ services:
   db_sonar:
     image: postgres
     container_name: db_sonar
+    restart: on-failure
     environment: 
       POSTGRES_USER: sonar
       POSTGRES_PASSWORD: sonar
