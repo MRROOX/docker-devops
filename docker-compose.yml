@@ -65,8 +65,10 @@ services:
     networks: 
       - devops_net
     environment: 
-      SONARQUBE_JDBC_URL: jdbc:postgresql://db_sonar:5432/sonar
- 
+      - sonar.jdbc.username=sonar
+      - sonar.jdbc.password=sonar
+      - sonar.jdbc.url=jdbc:postgresql://db_sonar/sonar
+
   db_sonar:
     image: postgres
     container_name: db_sonar
