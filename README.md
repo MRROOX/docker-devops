@@ -1,4 +1,4 @@
-# DEVOPS - ENVIRONMENT -> power by DOCKER
+# DEVOPS - ENVIRONMENT -> powered by DOCKER
 
 
 Ejemplo para la creacion de ecosistemas de entornos para aplicar metodos orientados a DEVOPS, utilizando la tecnologia de contenedores que ofrece Docker.
