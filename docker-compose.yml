@@ -78,9 +78,6 @@ services:
       POSTGRES_PASSWORD: sonar
     volumes:
       - type: volume
-        source: postgresql
-        target: /var/lib/postgresql
-      - type: volume
         source: postgresql_data
         target: /var/lib/posgresql/data
     
@@ -101,4 +98,3 @@ volumes:
   sonarqube_bundled-plugins:
 
   postgresql_data:
-  postgresql:
