@@ -27,7 +27,6 @@ services:
     restart: on-failure
     ports:
       - "8088:8080"
-      - "443:443"
       - "50000:50000"
     volumes:
       - type: volume
@@ -43,32 +42,29 @@ services:
     networks: 
       - devops_net
   
+  ## https://hub.docker.com/r/bitnami/sonarqube/
   sonarqube:
-    image: sonarqube
+    image: bitnami/sonarqube:latest
+    depends_on:
+      - db_sonar
     container_name: sonar_devops
     restart: on-failure
     ports: 
-      - "9000:9000"
+      - 9000:9000
+      - 443:8443 
     volumes: 
       - type: volume
-        source: sonarqube_conf
-        target: /opt/sonarqube/conf
-      - type: volume
         source: sonarqube_data
-        target: /opt/sonarqube/data
-      - type: volume
-        source: sonarqube_extensions
-        target: /opt/sonarqube/extensions
-      - type: volume
-        source: sonarqube_bundled-plugins
-        target: /opt/sonarqube/lib/bundled-plugins
+        target: /bitnami/sonarqube
     networks: 
       - devops_net
     environment: 
-      - sonar.jdbc.username=sonar
-      - sonar.jdbc.password=sonar
-      - sonar.jdbc.url=jdbc:postgresql://db_sonar/sonar
+      - SONARQUBE_DATABASE_USER=sonar
+      - SONARQUBE_DATABASE_PASSWORD=sonar
+      - SONARQUBE_DATABASE_NAME=sonar
+      - SONARQUBE_DATABASE_HOST=db_sonar
 
+ 
   db_sonar:
     image: postgres
     container_name: db_sonar
@@ -92,9 +88,8 @@ volumes:
 
   jenkins_home:
   
-  sonarqube_conf:
   sonarqube_data:
+  sonarqube_logs:
   sonarqube_extensions:
-  sonarqube_bundled-plugins:
 
   postgresql_data:
