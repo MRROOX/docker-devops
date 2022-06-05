@@ -1,25 +1,5 @@
-version: "3.3"
+version: "3.7"
 services:
-  portainer:
-    image: portainer/portainer
-    container_name: portainer_devops
-    restart: on-failure
-    ports:
-      - "9999:9000"
-      - "8008:8080"
-    volumes:
-      - type: volume
-        source: portainer_data
-        target: /data
-      - type: bind
-        source: /usr/bin/docker
-        target: /usr/bin/docker
-      - type: bind
-        source: /var/run/docker.sock
-        target: /var/run/docker.sock
-    networks: 
-      - devops_net
-  
   jenkins:
     image: jenkins/jenkins:lts
     container_name: jenkins_devops
@@ -41,44 +21,6 @@ services:
         
     networks: 
       - devops_net
-  
-  ## https://hub.docker.com/r/bitnami/sonarqube/
-  sonarqube:
-    image: bitnami/sonarqube:latest
-    depends_on:
-      - db_sonar
-    container_name: sonar_devops
-    restart: on-failure
-    ports: 
-      - 9000:9000
-      - 443:8443 
-    volumes: 
-      - type: volume
-        source: sonarqube_data
-        target: /bitnami/sonarqube
-    networks: 
-      - devops_net
-    environment: 
-      - SONARQUBE_DATABASE_USER=sonar
-      - SONARQUBE_DATABASE_PASSWORD=sonar
-      - SONARQUBE_DATABASE_NAME=sonar
-      - SONARQUBE_DATABASE_HOST=db_sonar
-
- 
-  db_sonar:
-    image: postgres
-    container_name: db_sonar
-    restart: on-failure
-    environment: 
-      POSTGRES_USER: sonar
-      POSTGRES_PASSWORD: sonar
-    volumes:
-      - type: volume
-        source: postgresql_data
-        target: /var/lib/posgresql/data
-    
-    networks: 
-      - devops_net
 
 networks: 
   devops_net:
@@ -87,9 +29,4 @@ volumes:
   portainer_data:
 
   jenkins_home:
-  
-  sonarqube_data:
-  sonarqube_logs:
-  sonarqube_extensions:
 
-  postgresql_data:
