@@ -75,7 +75,7 @@ services:
     volumes:
       - type: volume
         source: postgresql_data
-        target: /var/lib/posgresql/data
+        target: /var/lib/postgresql/data
     
     networks: 
       - devops_net
