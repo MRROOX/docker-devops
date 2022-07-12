@@ -19,18 +19,20 @@ services:
         target: /var/run/docker.sock
     networks: 
       - devops_net
-  
-  jenkins:
-    image: jenkins/jenkins:lts
-    container_name: jenkins_devops
+
+  jenkins-kubectl:
+    build:
+      context: ./JenkinsAndKubectl
+      dockerfile: Dockerfile
+    container_name: jenkins_kubectl
     user: root:root
     restart: on-failure
     ports:
-      - "8088:8080"
+      - "8080:8080"
       - "50000:50000"
     volumes:
       - type: volume
-        source: jenkins_home
+        source: jenkins_home_kubectl
         target: /var/jenkins_home
       - type: bind
         source: /usr/bin/docker
@@ -68,14 +70,14 @@ services:
   db_sonar:
     image: postgres
     container_name: db_sonar
-    restart: on-failure
+    restart: always
     environment: 
       POSTGRES_USER: sonar
       POSTGRES_PASSWORD: sonar
     volumes:
       - type: volume
         source: postgresql_data
-        target: /var/lib/posgresql/data
+        target: /var/lib/postgresql/data
     
     networks: 
       - devops_net
@@ -86,7 +88,7 @@ networks:
 volumes:
   portainer_data:
 
-  jenkins_home:
+  jenkins_home_kubectl:
   
   sonarqube_data:
   sonarqube_logs:
