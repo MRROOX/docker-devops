@@ -22,7 +22,7 @@ services:
 
   jenkins-kubectl:
     build:
-      context: ./JenkinsAndKubectl
+      context: ./JenkinsK8sHelm
       dockerfile: Dockerfile
     container_name: jenkins_kubectl
     user: root:root
